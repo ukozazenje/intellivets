@@ -8,7 +8,7 @@ const useStyles = makeStyles((theme) => ({
     width: '100%',
   },
   copyright: {
-    fontFamily: 'Roboto',
+    fontFamily: 'Open Sans',
     fontWeight: 300,
     textTransform: 'none',
     fontSize: '1rem',

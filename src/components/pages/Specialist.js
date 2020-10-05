@@ -22,13 +22,25 @@ import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Link from '@material-ui/core/Link';
 import Button from '@material-ui/core/Button';
+import Badge from '@material-ui/core/Badge';
+import MailIcon from '@material-ui/icons/Mail';
+import VisibilityIcon from '@material-ui/icons/Visibility';
+import PictureAsPdfIcon from '@material-ui/icons/PictureAsPdf';
+import Avatar from '@material-ui/core/Avatar';
+import avatarImg from '../../assets/home/avatar.jpg';
+import VideoLibraryIcon from '@material-ui/icons/VideoLibrary';
+import AssessmentIcon from '@material-ui/icons/Assessment';
+import Checkbox from '@material-ui/core/Checkbox';
+import { isThisMinute } from 'date-fns';
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
   },
   paper: {
+    ...theme.tablePaper,
     margin: theme.spacing(5),
-    padding: theme.spacing(3),
+    paddingTop: theme.spacing(3),
+    paddingBottom: theme.spacing(3),
   },
   searchInput: {
     width: '30%',
@@ -39,22 +51,53 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: 'space-between',
   },
   toolBarHeading: {
-    ...theme.typography.h4,
-  },
-  tableCell: {
-    fontFamily: 'Roboto',
-    fontWeight: 500,
-    textTransform: 'none',
+    fontFamily: 'Open Sans',
     fontSize: '1.125rem',
-    color: `#444`,
+    fontWeight: '600',
+    color: '#32325d',
   },
+  heroBackground: {
+    background: 'linear-gradient(87deg, #212529 0, #212229 100%) !important',
+    height: '380px',
+    width: '100%',
+    position: 'absolute',
+    top: '0',
+    zIndex: '0',
+  },
+  pageContainer: {
+    zIndex: '99',
+    position: 'relative',
+    paddingTop: theme.spacing(7),
+  },
+  // tableCell: {
+  //   fontFamily: 'Open Sans',
+  //   fontWeight: 600,
+  //   // color: 'red',
+  //   textTransform: 'none',
+  //   fontSize: '0.875rem',
+  //   color: `#444`,
+  // },
 }));
 const headCells = [
-  { id: 'fullName', label: 'Date' },
-  { id: 'email', label: 'Full name' },
-  { id: 'mobile', label: 'Veterinarian' },
-  { id: 'status', label: 'Status' },
+  { id: 'date', label: 'Date' },
+  { id: 'patient', label: 'Patient' },
+  { id: 'referring Veterinarian', label: 'Referring Veterinarian' },
   { id: 'details', label: 'Details', disableSorting: true },
+  { id: 'signalment', label: 'Signalment', disableSorting: true },
+  { id: 'inbox', label: 'Inbox', disableSorting: true },
+  { id: 'referral-form', label: 'Referral Form', disableSorting: true },
+  { id: 'consultation-form', label: 'Consultation Form', disableSorting: true },
+  { id: 'medical-records', label: 'Medical Records', disableSorting: true },
+  { id: 'imaging', label: 'Imaging', disableSorting: true },
+  { id: 'video', label: 'video', disableSorting: true },
+  {
+    id: 'virtual-conference',
+    label: 'Virtual Conference',
+    disableSorting: true,
+  },
+  { id: 'evaluation-report', label: 'Evaluation Report', disableSorting: true },
+  { id: 'archive', label: 'Archive', disableSorting: true },
+  { id: 'status', label: 'Status' },
 ];
 
 const Specialist = () => {
@@ -75,44 +118,518 @@ const Specialist = () => {
     {
       id: '18041985',
       date: '2020/07/02',
-      fullName: 'Zoe',
-      veterinarian: {
-        id: 12345,
-        name: 'Mr name',
-        phone: '7817693011',
-        email: 'dr_man@norwoodanimalhospital.com',
-        address: '437 Walpole Street, Norwood 02062, MA, USA',
-        licenseNumber: 'MA7601',
+      full_name: 'Eliza Larsen',
+      inbox: '10',
+      virtual_conference: '2020/07/02',
+      status: 'Pending',
+      patient: {
+        pet: {
+          name: 'dsadasdas',
+          breed: 'Akita',
+          dateOfBirth: '2020-09-18T18:39:00.000Z',
+          dog_age_unit: 'weeks',
+          dogs_age: '12',
+          gender: 'female',
+          acquire_dog: ' from a breeder',
+          age_acquired: '1221',
+          acquired_age_unit: 'weeks',
+          neutered: 'yes',
+          neutered_age: '12',
+          neutered_age_unit: 'weeks',
+          neutered_reason: 'to correct or reduce an existing health problem',
+          health_problems: 'yes',
+          health_problem_info: 'dasdasd',
+          concerned: 'only minor problems',
+          roles: 'field trials/hunting',
+          first_owned: 'no',
+          number_of_owned: '1 or 2',
+          dog_as_chil: 'yes',
+          other_dogs: 'no',
+          other_dogs_age: 'older',
+          invited_by_vet: 'no',
+        },
+        veterinarian: {
+          id: 12345,
+          name: 'Mr name',
+          phone: '7817693011',
+          email: 'dr_man@norwoodanimalhospital.com',
+          address: '437 Walpole Street, Norwood 02062, MA, USA',
+          licenseNumber: 'MA7601',
+        },
       },
-      status: 'pending',
     },
     {
       id: '18041985',
       date: '2020/07/02',
-      fullName: 'Zoe',
-      veterinarian: {
-        id: 123456,
-        name: 'Mr name',
-        phone: '7817693011',
-        email: 'dr_man@norwoodanimalhospital.com',
-        address: '437 Walpole Street, Norwood 02062, MA, USA',
-        licenseNumber: 'MA7601',
+      full_name: 'Manha Middleton',
+      inbox: '10',
+      virtual_conference: '2020/07/02',
+      status: 'Pending',
+      patient: {
+        pet: {
+          name: 'dsadasdas',
+          breed: 'Akita',
+          dateOfBirth: '2020-09-18T18:39:00.000Z',
+          dog_age_unit: 'weeks',
+          dogs_age: '12',
+          gender: 'female',
+          acquire_dog: ' from a breeder',
+          age_acquired: '1221',
+          acquired_age_unit: 'weeks',
+          neutered: 'yes',
+          neutered_age: '12',
+          neutered_age_unit: 'weeks',
+          neutered_reason: 'to correct or reduce an existing health problem',
+          health_problems: 'yes',
+          health_problem_info: 'dasdasd',
+          concerned: 'only minor problems',
+          roles: 'field trials/hunting',
+          first_owned: 'no',
+          number_of_owned: '1 or 2',
+          dog_as_chil: 'yes',
+          other_dogs: 'no',
+          other_dogs_age: 'older',
+          invited_by_vet: 'no',
+        },
+        veterinarian: {
+          id: 12345,
+          name: 'Mr name',
+          phone: '7817693011',
+          email: 'dr_man@norwoodanimalhospital.com',
+          address: '437 Walpole Street, Norwood 02062, MA, USA',
+          licenseNumber: 'MA7601',
+        },
       },
-      status: 'pending',
     },
     {
       id: '18041985',
       date: '2020/07/02',
-      fullName: 'Zoe',
-      veterinarian: {
-        id: 123457,
-        name: 'Mr name',
-        phone: '7817693011',
-        email: 'dr_man@norwoodanimalhospital.com',
-        address: '437 Walpole Street, Norwood 02062, MA, USA',
-        licenseNumber: 'MA7601',
+      full_name: 'Elysha Aldred',
+      inbox: '10',
+      virtual_conference: '2020/07/02',
+      status: 'Pending',
+      patient: {
+        pet: {
+          name: 'dsadasdas',
+          breed: 'Akita',
+          dateOfBirth: '2020-09-18T18:39:00.000Z',
+          dog_age_unit: 'weeks',
+          dogs_age: '12',
+          gender: 'female',
+          acquire_dog: ' from a breeder',
+          age_acquired: '1221',
+          acquired_age_unit: 'weeks',
+          neutered: 'yes',
+          neutered_age: '12',
+          neutered_age_unit: 'weeks',
+          neutered_reason: 'to correct or reduce an existing health problem',
+          health_problems: 'yes',
+          health_problem_info: 'dasdasd',
+          concerned: 'only minor problems',
+          roles: 'field trials/hunting',
+          first_owned: 'no',
+          number_of_owned: '1 or 2',
+          dog_as_chil: 'yes',
+          other_dogs: 'no',
+          other_dogs_age: 'older',
+          invited_by_vet: 'no',
+        },
+        veterinarian: {
+          id: 12345,
+          name: 'Mr name',
+          phone: '7817693011',
+          email: 'dr_man@norwoodanimalhospital.com',
+          address: '437 Walpole Street, Norwood 02062, MA, USA',
+          licenseNumber: 'MA7601',
+        },
       },
-      status: 'pending',
+    },
+    {
+      id: '18041985',
+      date: '2020/07/02',
+      full_name: 'Dean Redfern',
+      inbox: '10',
+      virtual_conference: '2020/07/02',
+      status: 'Pending',
+      patient: {
+        pet: {
+          name: 'dsadasdas',
+          breed: 'Akita',
+          dateOfBirth: '2020-09-18T18:39:00.000Z',
+          dog_age_unit: 'weeks',
+          dogs_age: '12',
+          gender: 'female',
+          acquire_dog: ' from a breeder',
+          age_acquired: '1221',
+          acquired_age_unit: 'weeks',
+          neutered: 'yes',
+          neutered_age: '12',
+          neutered_age_unit: 'weeks',
+          neutered_reason: 'to correct or reduce an existing health problem',
+          health_problems: 'yes',
+          health_problem_info: 'dasdasd',
+          concerned: 'only minor problems',
+          roles: 'field trials/hunting',
+          first_owned: 'no',
+          number_of_owned: '1 or 2',
+          dog_as_chil: 'yes',
+          other_dogs: 'no',
+          other_dogs_age: 'older',
+          invited_by_vet: 'no',
+        },
+        veterinarian: {
+          id: 12345,
+          name: 'Mr name',
+          phone: '7817693011',
+          email: 'dr_man@norwoodanimalhospital.com',
+          address: '437 Walpole Street, Norwood 02062, MA, USA',
+          licenseNumber: 'MA7601',
+        },
+      },
+    },
+    {
+      id: '18041985',
+      date: '2020/07/02',
+      full_name: 'Fraya Burrows',
+      inbox: '10',
+      virtual_conference: '2020/07/02',
+      status: 'Pending',
+      patient: {
+        pet: {
+          name: 'dsadasdas',
+          breed: 'Akita',
+          dateOfBirth: '2020-09-18T18:39:00.000Z',
+          dog_age_unit: 'weeks',
+          dogs_age: '12',
+          gender: 'female',
+          acquire_dog: ' from a breeder',
+          age_acquired: '1221',
+          acquired_age_unit: 'weeks',
+          neutered: 'yes',
+          neutered_age: '12',
+          neutered_age_unit: 'weeks',
+          neutered_reason: 'to correct or reduce an existing health problem',
+          health_problems: 'yes',
+          health_problem_info: 'dasdasd',
+          concerned: 'only minor problems',
+          roles: 'field trials/hunting',
+          first_owned: 'no',
+          number_of_owned: '1 or 2',
+          dog_as_chil: 'yes',
+          other_dogs: 'no',
+          other_dogs_age: 'older',
+          invited_by_vet: 'no',
+        },
+        veterinarian: {
+          id: 12345,
+          name: 'Mr name',
+          phone: '7817693011',
+          email: 'dr_man@norwoodanimalhospital.com',
+          address: '437 Walpole Street, Norwood 02062, MA, USA',
+          licenseNumber: 'MA7601',
+        },
+      },
+    },
+    {
+      id: '18041985',
+      date: '2020/07/02',
+      full_name: 'Cassia Ratcliffe',
+      inbox: '10',
+      virtual_conference: '2020/07/02',
+      status: 'Pending',
+      patient: {
+        pet: {
+          name: 'dsadasdas',
+          breed: 'Akita',
+          dateOfBirth: '2020-09-18T18:39:00.000Z',
+          dog_age_unit: 'weeks',
+          dogs_age: '12',
+          gender: 'female',
+          acquire_dog: ' from a breeder',
+          age_acquired: '1221',
+          acquired_age_unit: 'weeks',
+          neutered: 'yes',
+          neutered_age: '12',
+          neutered_age_unit: 'weeks',
+          neutered_reason: 'to correct or reduce an existing health problem',
+          health_problems: 'yes',
+          health_problem_info: 'dasdasd',
+          concerned: 'only minor problems',
+          roles: 'field trials/hunting',
+          first_owned: 'no',
+          number_of_owned: '1 or 2',
+          dog_as_chil: 'yes',
+          other_dogs: 'no',
+          other_dogs_age: 'older',
+          invited_by_vet: 'no',
+        },
+        veterinarian: {
+          id: 12345,
+          name: 'Mr name',
+          phone: '7817693011',
+          email: 'dr_man@norwoodanimalhospital.com',
+          address: '437 Walpole Street, Norwood 02062, MA, USA',
+          licenseNumber: 'MA7601',
+        },
+      },
+    },
+    {
+      id: '18041985',
+      date: '2020/07/02',
+      full_name: 'Mason Simon',
+      inbox: '10',
+      virtual_conference: '2020/07/02',
+      status: 'Pending',
+      patient: {
+        pet: {
+          name: 'dsadasdas',
+          breed: 'Akita',
+          dateOfBirth: '2020-09-18T18:39:00.000Z',
+          dog_age_unit: 'weeks',
+          dogs_age: '12',
+          gender: 'female',
+          acquire_dog: ' from a breeder',
+          age_acquired: '1221',
+          acquired_age_unit: 'weeks',
+          neutered: 'yes',
+          neutered_age: '12',
+          neutered_age_unit: 'weeks',
+          neutered_reason: 'to correct or reduce an existing health problem',
+          health_problems: 'yes',
+          health_problem_info: 'dasdasd',
+          concerned: 'only minor problems',
+          roles: 'field trials/hunting',
+          first_owned: 'no',
+          number_of_owned: '1 or 2',
+          dog_as_chil: 'yes',
+          other_dogs: 'no',
+          other_dogs_age: 'older',
+          invited_by_vet: 'no',
+        },
+        veterinarian: {
+          id: 12345,
+          name: 'Mr name',
+          phone: '7817693011',
+          email: 'dr_man@norwoodanimalhospital.com',
+          address: '437 Walpole Street, Norwood 02062, MA, USA',
+          licenseNumber: 'MA7601',
+        },
+      },
+    },
+    {
+      id: '18041985',
+      date: '2020/07/02',
+      full_name: 'Gracie-May Mcphee',
+      inbox: '10',
+      virtual_conference: '2020/07/02',
+      status: 'Pending',
+      patient: {
+        pet: {
+          name: 'dsadasdas',
+          breed: 'Akita',
+          dateOfBirth: '2020-09-18T18:39:00.000Z',
+          dog_age_unit: 'weeks',
+          dogs_age: '12',
+          gender: 'female',
+          acquire_dog: ' from a breeder',
+          age_acquired: '1221',
+          acquired_age_unit: 'weeks',
+          neutered: 'yes',
+          neutered_age: '12',
+          neutered_age_unit: 'weeks',
+          neutered_reason: 'to correct or reduce an existing health problem',
+          health_problems: 'yes',
+          health_problem_info: 'dasdasd',
+          concerned: 'only minor problems',
+          roles: 'field trials/hunting',
+          first_owned: 'no',
+          number_of_owned: '1 or 2',
+          dog_as_chil: 'yes',
+          other_dogs: 'no',
+          other_dogs_age: 'older',
+          invited_by_vet: 'no',
+        },
+        veterinarian: {
+          id: 12345,
+          name: 'Mr name',
+          phone: '7817693011',
+          email: 'dr_man@norwoodanimalhospital.com',
+          address: '437 Walpole Street, Norwood 02062, MA, USA',
+          licenseNumber: 'MA7601',
+        },
+      },
+    },
+    {
+      id: '18041985',
+      date: '2020/07/02',
+      full_name: 'Imaad Gill',
+      inbox: '10',
+      virtual_conference: '2020/07/02',
+      status: 'Pending',
+      patient: {
+        pet: {
+          name: 'dsadasdas',
+          breed: 'Akita',
+          dateOfBirth: '2020-09-18T18:39:00.000Z',
+          dog_age_unit: 'weeks',
+          dogs_age: '12',
+          gender: 'female',
+          acquire_dog: ' from a breeder',
+          age_acquired: '1221',
+          acquired_age_unit: 'weeks',
+          neutered: 'yes',
+          neutered_age: '12',
+          neutered_age_unit: 'weeks',
+          neutered_reason: 'to correct or reduce an existing health problem',
+          health_problems: 'yes',
+          health_problem_info: 'dasdasd',
+          concerned: 'only minor problems',
+          roles: 'field trials/hunting',
+          first_owned: 'no',
+          number_of_owned: '1 or 2',
+          dog_as_chil: 'yes',
+          other_dogs: 'no',
+          other_dogs_age: 'older',
+          invited_by_vet: 'no',
+        },
+        veterinarian: {
+          id: 12345,
+          name: 'Mr name',
+          phone: '7817693011',
+          email: 'dr_man@norwoodanimalhospital.com',
+          address: '437 Walpole Street, Norwood 02062, MA, USA',
+          licenseNumber: 'MA7601',
+        },
+      },
+    },
+    {
+      id: '18041985',
+      date: '2020/07/02',
+      full_name: 'Tamera Parkes',
+      inbox: '10',
+      virtual_conference: '2020/07/02',
+      status: 'Pending',
+      patient: {
+        pet: {
+          name: 'dsadasdas',
+          breed: 'Akita',
+          dateOfBirth: '2020-09-18T18:39:00.000Z',
+          dog_age_unit: 'weeks',
+          dogs_age: '12',
+          gender: 'female',
+          acquire_dog: ' from a breeder',
+          age_acquired: '1221',
+          acquired_age_unit: 'weeks',
+          neutered: 'yes',
+          neutered_age: '12',
+          neutered_age_unit: 'weeks',
+          neutered_reason: 'to correct or reduce an existing health problem',
+          health_problems: 'yes',
+          health_problem_info: 'dasdasd',
+          concerned: 'only minor problems',
+          roles: 'field trials/hunting',
+          first_owned: 'no',
+          number_of_owned: '1 or 2',
+          dog_as_chil: 'yes',
+          other_dogs: 'no',
+          other_dogs_age: 'older',
+          invited_by_vet: 'no',
+        },
+        veterinarian: {
+          id: 12345,
+          name: 'Mr name',
+          phone: '7817693011',
+          email: 'dr_man@norwoodanimalhospital.com',
+          address: '437 Walpole Street, Norwood 02062, MA, USA',
+          licenseNumber: 'MA7601',
+        },
+      },
+    },
+    {
+      id: '18041985',
+      date: '2020/07/02',
+      full_name: 'Nial Gibbs',
+      inbox: '10',
+      virtual_conference: '2020/07/02',
+      status: 'Pending',
+      patient: {
+        pet: {
+          name: 'dsadasdas',
+          breed: 'Akita',
+          dateOfBirth: '2020-09-18T18:39:00.000Z',
+          dog_age_unit: 'weeks',
+          dogs_age: '12',
+          gender: 'female',
+          acquire_dog: ' from a breeder',
+          age_acquired: '1221',
+          acquired_age_unit: 'weeks',
+          neutered: 'yes',
+          neutered_age: '12',
+          neutered_age_unit: 'weeks',
+          neutered_reason: 'to correct or reduce an existing health problem',
+          health_problems: 'yes',
+          health_problem_info: 'dasdasd',
+          concerned: 'only minor problems',
+          roles: 'field trials/hunting',
+          first_owned: 'no',
+          number_of_owned: '1 or 2',
+          dog_as_chil: 'yes',
+          other_dogs: 'no',
+          other_dogs_age: 'older',
+          invited_by_vet: 'no',
+        },
+        veterinarian: {
+          id: 12345,
+          name: 'Mr name',
+          phone: '7817693011',
+          email: 'dr_man@norwoodanimalhospital.com',
+          address: '437 Walpole Street, Norwood 02062, MA, USA',
+          licenseNumber: 'MA7601',
+        },
+      },
+    },
+    {
+      id: '18041985',
+      date: '2020/07/02',
+      full_name: 'Tolga Ashley',
+      inbox: '10',
+      virtual_conference: '2020/07/02',
+      status: 'Pending',
+      patient: {
+        pet: {
+          name: 'dsadasdas',
+          breed: 'Akita',
+          dateOfBirth: '2020-09-18T18:39:00.000Z',
+          dog_age_unit: 'weeks',
+          dogs_age: '12',
+          gender: 'female',
+          acquire_dog: ' from a breeder',
+          age_acquired: '1221',
+          acquired_age_unit: 'weeks',
+          neutered: 'yes',
+          neutered_age: '12',
+          neutered_age_unit: 'weeks',
+          neutered_reason: 'to correct or reduce an existing health problem',
+          health_problems: 'yes',
+          health_problem_info: 'dasdasd',
+          concerned: 'only minor problems',
+          roles: 'field trials/hunting',
+          first_owned: 'no',
+          number_of_owned: '1 or 2',
+          dog_as_chil: 'yes',
+          other_dogs: 'no',
+          other_dogs_age: 'older',
+          invited_by_vet: 'no',
+        },
+        veterinarian: {
+          id: 12345,
+          name: 'Mr name',
+          phone: '7817693011',
+          email: 'dr_man@norwoodanimalhospital.com',
+          address: '437 Walpole Street, Norwood 02062, MA, USA',
+          licenseNumber: 'MA7601',
+        },
+      },
     },
   ]);
   const [filterFn, setFilterFn] = useState({
@@ -129,12 +646,13 @@ const Specialist = () => {
 
   const handleSearch = (e) => {
     let target = e.target;
+    console.log(target.value);
     setFilterFn({
       fn: (items) => {
         if (target.value == '') return items;
         else
           return items.filter((x) =>
-            x.fullName.toLowerCase().includes(target.value),
+            x.patient.veterinarian.name.toLowerCase().includes(target.value),
           );
       },
     });
@@ -150,6 +668,7 @@ const Specialist = () => {
   };
   return (
     <div className={classes.root}>
+      <div className={classes.heroBackground}></div>
       <Dialog
         fullWidth={true}
         maxWidth="md"
@@ -223,8 +742,8 @@ const Specialist = () => {
           </Button>
         </DialogActions>
       </Dialog>
-      <Container maxWidth="xl">
-        <Paper className={classes.paper} elevation={2}>
+      <Container className={classes.pageContainer} maxWidth="xl">
+        <Paper className={classes.paper}>
           <Toolbar className={classes.toolBar}>
             <TextField
               variant="outlined"
@@ -250,27 +769,51 @@ const Specialist = () => {
                     {item.date}
                   </TableCell>
                   <TableCell className={classes.tableCell}>
-                    {item.fullName}
+                    {item.full_name}
                   </TableCell>
                   <TableCell className={classes.tableCell}>
                     <Link
                       onClick={() => handleClickOpen(item.id)}
                       color="inherit"
                     >
-                      {item.veterinarian.name}
+                      {item.patient.veterinarian.name}
                     </Link>
+                  </TableCell>
+                  <TableCell className={classes.tableCell}>View</TableCell>
+                  <TableCell className={classes.tableCell}>View</TableCell>
+                  <TableCell className={classes.tableCell}>
+                    <Badge badgeContent={item.inbox || 0} color="secondary">
+                      <MailIcon />
+                    </Badge>
+                  </TableCell>
+                  <TableCell className={classes.tableCell}>View</TableCell>
+                  <TableCell className={classes.tableCell}>View</TableCell>
+                  <TableCell className={classes.tableCell}>View</TableCell>
+                  <TableCell className={classes.tableCell}>
+                    <Avatar alt="Corgy dog" src={avatarImg} />
+                  </TableCell>
+                  <TableCell className={classes.tableCell}>
+                    <VideoLibraryIcon color="error" />
+                  </TableCell>
+                  <TableCell className={classes.tableCell}>
+                    {item.virtual_conference}
+                  </TableCell>
+                  <TableCell className={classes.tableCell}>
+                    <AssessmentIcon color="secondary" />
+                  </TableCell>
+                  <TableCell className={classes.tableCell}>
+                    <Checkbox />
                   </TableCell>
                   <TableCell className={classes.tableCell}>
                     {item.status}
                   </TableCell>
-                  <TableCell className={classes.tableCell}>View</TableCell>
                 </TableRow>
               ))}
             </TableBody>
           </TblContainer>
           <TblPagination />
         </Paper>
-        <Paper className={classes.paper}>
+        {/* <Paper className={classes.paper}>
           <Toolbar className={classes.toolBar}>
             <TextField
               variant="outlined"
@@ -310,7 +853,7 @@ const Specialist = () => {
             </TableBody>
           </TblContainer>
           <TblPagination />
-        </Paper>
+        </Paper> */}
       </Container>
     </div>
   );

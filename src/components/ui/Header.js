@@ -4,8 +4,8 @@ import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import useScrollTrigger from '@material-ui/core/useScrollTrigger';
 import { makeStyles } from '@material-ui/styles';
-import Tabs from '@material-ui/core/tabs';
-import Tab from '@material-ui/core/tab';
+import Tabs from '@material-ui/core/Tabs';
+import Tab from '@material-ui/core/Tab';
 import Button from '@material-ui/core/Button';
 import { Link } from 'react-router-dom';
 import Menu from '@material-ui/core/Menu';
@@ -197,44 +197,6 @@ const Header = () => {
       >
         Sign up
       </Button>
-      {/* <Menu
-        id="simple-menu"
-        anchorEl={anchorEl}
-        open={open}
-        onClose={handleClose}
-        MenuListProps={{ onMouseLeave: handleClose }}
-      >
-        <MenuItem
-          component={Link}
-          to="/payment-history"
-          onClick={() => {
-            setValue(2);
-            handleClose();
-          }}
-        >
-          Payment History
-        </MenuItem>
-        <MenuItem
-          component={Link}
-          to="/update-account"
-          onClick={() => {
-            setValue(2);
-            handleClose();
-          }}
-        >
-          Update Account
-        </MenuItem>
-        <MenuItem
-          component={Link}
-          to="/"
-          onClick={() => {
-            setValue(2);
-            handleClose();
-          }}
-        >
-          Log out
-        </MenuItem>
-      </Menu> */}
     </>
   );
 

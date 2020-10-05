@@ -13,20 +13,22 @@ const useStyles = makeStyles((theme) => ({
   table: {
     marginTop: theme.spacing(3),
     '& thead th': {
-      fontWeight: '500',
-      color: theme.palette.primary,
-      backgroundColor: '#eeeeee',
-      fontSize: '1.25rem',
-      fontFamily: 'Roboto',
+      fontWeight: '600',
+      backgroundColor: '#F6F9FC',
+      fontSize: '0.65rem',
+      fontFamily: 'Open Sans',
+      letterSpacing: '1px',
+      textTransform: 'uppercase',
+      color: '#8898aa',
+      padding: '0.75rem',
     },
     '& tbody td': {
-      fontSize: '1.125rem',
-      fontWeight: '300',
-      fontFamily: 'Roboto',
+      fontSize: '0.8125rem',
+      fontWeight: '400',
+      fontFamily: 'Open Sans',
     },
     '& tbody tr:hover': {
-      backgroundColor: '#fffbf2',
-      cursor: 'pointer',
+      backgroundColor: '#f5f5f5',
     },
   },
 }));

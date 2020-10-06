@@ -176,12 +176,13 @@ const GeneralPractitioner = () => {
 
   const handleSearch = (e) => {
     let target = e.target;
+    console.log(target.value);
     setFilterFn({
       fn: (items) => {
         if (target.value == '') return items;
         else
           return items.filter((x) =>
-            x.fullName.toLowerCase().includes(target.value),
+            x.patient.toLowerCase().includes(target.value),
           );
       },
     });
@@ -266,7 +267,7 @@ const GeneralPractitioner = () => {
           <Toolbar className={classes.toolBar}>
             <TextField
               variant="outlined"
-              label="Search veterinarian"
+              label="Search patient"
               className={classes.searchInput}
               onChange={handleSearch}
               InputProps={{

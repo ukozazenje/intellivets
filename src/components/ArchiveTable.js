@@ -9,7 +9,7 @@ import Paper from '@material-ui/core/Paper';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
 import TableRow from '@material-ui/core/TableRow';
-import useTable from '../useTable';
+import useTable from './useTable';
 import Search from '@material-ui/icons/Search';
 import Toolbar from '@material-ui/core/Toolbar';
 import InputAdornment from '@material-ui/core/InputAdornment';
@@ -29,13 +29,12 @@ import MailIcon from '@material-ui/icons/Mail';
 import VisibilityIcon from '@material-ui/icons/Visibility';
 import PictureAsPdfIcon from '@material-ui/icons/PictureAsPdf';
 import Avatar from '@material-ui/core/Avatar';
-import avatarImg from '../../assets/home/avatar.jpg';
+import avatarImg from '../assets/home/avatar.jpg';
 import VideoLibraryIcon from '@material-ui/icons/VideoLibrary';
 import AssessmentIcon from '@material-ui/icons/Assessment';
 import Checkbox from '@material-ui/core/Checkbox';
 import { isThisMinute } from 'date-fns';
-import { specialistData } from '../../data/specialistData';
-import ArchiveTable from '../ArchiveTable';
+// import { specialistData } from '../../data/specialistData';
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
@@ -104,7 +103,7 @@ const headCells = [
   { id: 'status', label: 'Status' },
 ];
 
-const Specialist = () => {
+const ArchiveTable = ({ archivedRecords, handleUnArchiveRecord }) => {
   const classes = useStyles();
   const theme = useTheme();
   const fullScreen = useMediaQuery(theme.breakpoints.down('lg'));
@@ -118,9 +117,6 @@ const Specialist = () => {
   const [open, setOpen] = React.useState(false);
   const [selectedVet, setSelectedVet] = useState(null);
 
-  const [records, setRecords] = useState(specialistData);
-  const [archivedRecords, setArchivedRecords] = useState([]);
-
   const [filterFn, setFilterFn] = useState({
     fn: (items) => {
       return items;
@@ -131,7 +127,7 @@ const Specialist = () => {
     TblHead,
     TblPagination,
     recordsAfterPagingAndSorting,
-  } = useTable(records, headCells, filterFn);
+  } = useTable(archivedRecords, headCells, filterFn);
 
   const handleSearch = (e) => {
     let target = e.target;
@@ -149,7 +145,7 @@ const Specialist = () => {
 
   const handleClickOpen = (id) => {
     console.log(id);
-    records.map(
+    archivedRecords.map(
       (record) =>
         record.id == id && setSelectedVet(record.patient.veterinarian),
     );
@@ -159,30 +155,8 @@ const Specialist = () => {
   const handleClose = () => {
     setOpen(false);
   };
-
-  const handleArchiveRecord = (id) => {
-    console.log(id);
-    records.map(
-      (record) =>
-        record.id == id && setArchivedRecords([...archivedRecords, record]),
-    );
-    const filterRecords = records.filter((record) => record.id != id);
-    setRecords(filterRecords);
-  };
-
-  const handleUnArchiveRecord = (id) => {
-    console.log(id);
-    archivedRecords.map(
-      (record) => record.id == id && setRecords([...records, record]),
-    );
-    const filterArchiveRecords = archivedRecords.filter(
-      (record) => record.id != id,
-    );
-    setArchivedRecords(filterArchiveRecords);
-  };
   return (
-    <div className={classes.root}>
-      <div className={classes.heroBackground}></div>
+    <Paper className={classes.paper}>
       <Dialog
         fullWidth={true}
         maxWidth="md"
@@ -256,125 +230,72 @@ const Specialist = () => {
           </Button>
         </DialogActions>
       </Dialog>
-      <Container className={classes.pageContainer} maxWidth="xl">
-        <Paper className={classes.paper}>
-          <Toolbar className={classes.toolBar}>
-            <TextField
-              variant="outlined"
-              label="Search veterinarian"
-              className={classes.searchInput}
-              onChange={handleSearch}
-              InputProps={{
-                startAdornment: (
-                  <InputAdornment position="start">
-                    <Search />
-                  </InputAdornment>
-                ),
-              }}
-            />
-            <h4 className={classes.toolBarHeading}>Consults Pending</h4>
-          </Toolbar>
-          <TblContainer>
-            <TblHead />
-            <TableBody>
-              {recordsAfterPagingAndSorting().map((item) => (
-                <TableRow key={item.id}>
-                  <TableCell className={classes.tableCell}>
-                    {item.date}
-                  </TableCell>
-                  <TableCell className={classes.tableCell}>
-                    {item.full_name}
-                  </TableCell>
-                  <TableCell className={classes.tableCell}>
-                    <Link
-                      onClick={() => handleClickOpen(item.id)}
-                      color="inherit"
-                    >
-                      {item.patient.veterinarian.name}
-                    </Link>
-                  </TableCell>
-                  <TableCell className={classes.tableCell}>View</TableCell>
-                  <TableCell className={classes.tableCell}>View</TableCell>
-                  <TableCell className={classes.tableCell}>
-                    <Badge badgeContent={item.inbox || 0} color="secondary">
-                      <MailIcon />
-                    </Badge>
-                  </TableCell>
-                  <TableCell className={classes.tableCell}>View</TableCell>
-                  <TableCell className={classes.tableCell}>View</TableCell>
-                  <TableCell className={classes.tableCell}>View</TableCell>
-                  <TableCell className={classes.tableCell}>
-                    <Avatar alt="Corgy dog" src={avatarImg} />
-                  </TableCell>
-                  <TableCell className={classes.tableCell}>
-                    <VideoLibraryIcon color="error" />
-                  </TableCell>
-                  <TableCell className={classes.tableCell}>
-                    {item.virtual_conference}
-                  </TableCell>
-                  <TableCell className={classes.tableCell}>
-                    <AssessmentIcon color="secondary" />
-                  </TableCell>
-                  <TableCell className={classes.tableCell}>
-                    <Checkbox onChange={() => handleArchiveRecord(item.id)} />
-                  </TableCell>
-                  <TableCell className={classes.tableCell}>
-                    {item.status}
-                  </TableCell>
-                </TableRow>
-              ))}
-            </TableBody>
-          </TblContainer>
-          <TblPagination />
-        </Paper>
-        <ArchiveTable
-          archivedRecords={archivedRecords}
-          handleUnArchiveRecord={handleUnArchiveRecord}
+      <Toolbar className={classes.toolBar}>
+        <TextField
+          variant="outlined"
+          label="Search veterinarian"
+          className={classes.searchInput}
+          onChange={handleSearch}
+          InputProps={{
+            startAdornment: (
+              <InputAdornment position="start">
+                <Search />
+              </InputAdornment>
+            ),
+          }}
         />
-        {/* <Paper className={classes.paper}>
-          <Toolbar className={classes.toolBar}>
-            <TextField
-              variant="outlined"
-              label="Search veterinarian"
-              className={classes.searchInput}
-              onChange={handleSearch}
-              InputProps={{
-                startAdornment: (
-                  <InputAdornment position="start">
-                    <Search />
-                  </InputAdornment>
-                ),
-              }}
-            />
-            <h4 className={classes.toolBarHeading}>Consults Completed</h4>
-          </Toolbar>
-          <TblContainer>
-            <TblHead />
-            <TableBody>
-              {recordsAfterPagingAndSorting().map((item) => (
-                <TableRow key={item.id}>
-                  <TableCell className={classes.tableCell}>
-                    {item.date}
-                  </TableCell>
-                  <TableCell className={classes.tableCell}>
-                    {item.fullName}
-                  </TableCell>
-                  <TableCell className={classes.tableCell}>
-                    {item.veterinarian.name}
-                  </TableCell>
-                  <TableCell className={classes.tableCell}>
-                    {item.status}
-                  </TableCell>
-                  <TableCell className={classes.tableCell}>View</TableCell>
-                </TableRow>
-              ))}
-            </TableBody>
-          </TblContainer>
-          <TblPagination />
-        </Paper> */}
-      </Container>
-    </div>
+        <h4 className={classes.toolBarHeading}>Consults Completed</h4>
+      </Toolbar>
+      <TblContainer>
+        <TblHead />
+        <TableBody>
+          {recordsAfterPagingAndSorting().map((item) => (
+            <TableRow key={item.id}>
+              <TableCell className={classes.tableCell}>{item.date}</TableCell>
+              <TableCell className={classes.tableCell}>
+                {item.full_name}
+              </TableCell>
+              <TableCell className={classes.tableCell}>
+                <Link onClick={() => handleClickOpen(item.id)} color="inherit">
+                  {item.patient.veterinarian.name}
+                </Link>
+              </TableCell>
+              <TableCell className={classes.tableCell}>View</TableCell>
+              <TableCell className={classes.tableCell}>View</TableCell>
+              <TableCell className={classes.tableCell}>
+                <Badge badgeContent={item.inbox || 0} color="secondary">
+                  <MailIcon />
+                </Badge>
+              </TableCell>
+              <TableCell className={classes.tableCell}>View</TableCell>
+              <TableCell className={classes.tableCell}>View</TableCell>
+              <TableCell className={classes.tableCell}>View</TableCell>
+              <TableCell className={classes.tableCell}>
+                <Avatar alt="Corgy dog" src={avatarImg} />
+              </TableCell>
+              <TableCell className={classes.tableCell}>
+                <VideoLibraryIcon color="error" />
+              </TableCell>
+              <TableCell className={classes.tableCell}>
+                {item.virtual_conference}
+              </TableCell>
+              <TableCell className={classes.tableCell}>
+                <AssessmentIcon color="secondary" />
+              </TableCell>
+              <TableCell className={classes.tableCell}>
+                <Checkbox
+                  checked
+                  onChange={() => handleUnArchiveRecord(item.id)}
+                />
+              </TableCell>
+              <TableCell className={classes.tableCell}>{item.status}</TableCell>
+            </TableRow>
+          ))}
+        </TableBody>
+      </TblContainer>
+      <TblPagination />
+    </Paper>
   );
 };
 
-export default Specialist;
+export default ArchiveTable;

@@ -11,6 +11,8 @@ import Specialist from './pages/Specialist';
 import Pet from './pages/Pet';
 import Resources from './pages/Resources';
 import GeneralPractitioner from './pages/GeneralPractitioner';
+import PetOwner from './pages/PetOwner';
+
 function App() {
   return (
     <ThemeProvider theme={theme}>
@@ -34,6 +36,7 @@ function App() {
           <Route exact path="/sign-up" component={() => <SignUp />} />
           <Route exact path="/pet" component={() => <Pet />} />
           <Route exact path="/resources" component={() => <Resources />} />
+          <Route exact path="/pet-owner" component={() => <PetOwner />} />
         </Switch>
         <Footer />
       </BrowserRouter>

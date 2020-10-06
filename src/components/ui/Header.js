@@ -179,6 +179,33 @@ const Header = () => {
           to="/specialist"
           label="Specialist"
         />
+        <Tab
+          aria-owns={anchorEl ? 'single-menu' : undefined}
+          aria-haspopup={anchorEl ? true : undefined}
+          className={classes.tab}
+          component={Link}
+          onMouseOver={(event) => handleClick(event)}
+          to="/general-practitioner"
+          label="General Practitioner"
+        />
+        <Tab
+          aria-owns={anchorEl ? 'single-menu' : undefined}
+          aria-haspopup={anchorEl ? true : undefined}
+          className={classes.tab}
+          component={Link}
+          onMouseOver={(event) => handleClick(event)}
+          to="/pet"
+          label="Pet"
+        />
+        <Tab
+          aria-owns={anchorEl ? 'single-menu' : undefined}
+          aria-haspopup={anchorEl ? true : undefined}
+          className={classes.tab}
+          component={Link}
+          onMouseOver={(event) => handleClick(event)}
+          to="/resources"
+          label="Resources"
+        />
       </Tabs>
       <Button
         variant="outlined"
